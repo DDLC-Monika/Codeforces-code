@@ -297,48 +297,41 @@ void Sakuya()
         maxn[i] = min(maxn[i - 1], a[i]);
     }
 
-    int maxnpos = -1;
-
-    for(int i = 1; i <= 2e5; ++ i){
-        posL[i] = n + 1;
-    }
-
     for(int i = 1; i <= k; ++ i){
         cin >> c[i].l >> c[i].r >> c[i].d;
-
-        pos[c[i].d] = max(pos[c[i].d], c[i].r);
-
-        posL[c[i].d] = min(posL[c[i].d], c[i].l);
-
-        maxnpos = max(maxnpos, c[i].r);
     }
     
-    pos[(int)2e5 + 1] = pos[maxnpos];
-    for(int i = 2e5; i >= 1; -- i){
-        pos[i] = max(pos[i], pos[i + 1]);
-    }
-    posL[0] = n + 1;
-    for(int i = 1; i <= 2e5 + 1; ++ i){
-        posL[i] = min(posL[i], pos[i]);
-        posL[i] = min(posL[i], posL[i - 1]);
-    }
-    // for(int i = 1; i <= 5; ++ i){
-    //     cout << posL[i] << " ";
-    // }
-    // cout << "\n";
+    sort(c + 1, c + 1 + k, [&](Node a, Node b){
+        return a.d > b.d;
+    });
 
     l = 1, r = m, POS = 0;
 
     auto check = [&](int x) -> bool{
         int nowd = a[x];
-        auto nowpos = pos[nowd + 1];
+        auto nowcost = 0;
+        
+        vector<int>len(n + 2, 0);
 
-        // cout << x << " " << nowd << " " << nowpos << "\n";
-        // cout << nowpos * 2 + n + 1 << "\n";
-        int nowcost = nowpos * 2 + n + 1;
-        nowcost -= 2 * max(0LL, (posL[nowd + 1] - 1));
+        for(int i = 1; i <= k; ++ i){
+            auto [L, R, val] = c[i];
+            if(val > nowd){
+                len[L] += 1;
+                len[R + 1] -= 1;
+            }else break;
+        }
 
-        // cout << x << " " << nowcost << "\n";
+        for(int i = 1; i <= n + 1; ++ i){
+            len[i] += len[i - 1];
+        }
+
+        for(int i = 1; i <= n + 1; ++ i){
+            if(len[i] == 0){
+                nowcost += 1;
+            }else {
+                nowcost += 3;
+            }
+        }
 
         return nowcost <= t;
     };
