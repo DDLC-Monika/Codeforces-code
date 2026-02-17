@@ -1,0 +1,367 @@
+#A：
+
+#include <bits/stdc++.h>
+
+using namespace std;
+typedef unsigned long long ULL;
+using LL = long long;
+
+mt19937_64 rd(time(0));
+constexpr int N = 3e5 + 5, mod = 998244353;
+constexpr double eps = 1e-8;
+//#pragma GCC optimize("Ofast,no-stack-protector,unroll-loops,fast-math")
+//#pragma GCC target("sse,sse2,sse3,ssse3,sse4.1,sse4.2,avx,avx2,popcnt,tune=native")
+
+#define fi first
+#define se second
+#define int long long
+#define lowbit(x) (x & (-x))
+#define PII pair<int, int>
+#define mid ((l + r) >> 1)
+
+int min(int a, int b) { return a < b ? a : b; }
+int max(int a, int b) { return a > b ? a : b; }
+
+int ksm(int a, int b){
+    a %= mod;
+    int res = 1;
+    while(b){
+        if(b & 1)res = res * a % mod;
+        a = a * a % mod;
+        b >>= 1;
+    }
+    return res;
+}
+
+int n, m;
+int a[N];
+void Sakuya()
+{
+    cin >> n >> m;
+
+    int has = m / n;
+    int lst = m % n;
+
+    int ans = 0;
+
+    for(int i = 1; i <= n; ++ i){
+        if(i <= lst){
+            ans += (has + 1) * (has + 1);
+        }else {
+            ans += has * has;
+        }
+    }
+    cout << ans << "\n";
+}
+
+signed main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int T;
+    for (cin >> T; T -- ; )
+        Sakuya();
+
+}
+
+
+#B:
+#include <bits/stdc++.h>
+
+using namespace std;
+typedef unsigned long long ULL;
+using LL = long long;
+
+mt19937_64 rd(time(0));
+constexpr int N = 3e5 + 5, mod = 998244353;
+constexpr double eps = 1e-8;
+//#pragma GCC optimize("Ofast,no-stack-protector,unroll-loops,fast-math")
+//#pragma GCC target("sse,sse2,sse3,ssse3,sse4.1,sse4.2,avx,avx2,popcnt,tune=native")
+
+#define fi first
+#define se second
+#define int long long
+#define lowbit(x) (x & (-x))
+#define PII pair<int, int>
+#define mid ((l + r) >> 1)
+
+int min(int a, int b) { return a < b ? a : b; }
+int max(int a, int b) { return a > b ? a : b; }
+
+int ksm(int a, int b){
+    a %= mod;
+    int res = 1;
+    while(b){
+        if(b & 1)res = res * a % mod;
+        a = a * a % mod;
+        b >>= 1;
+    }
+    return res;
+}
+
+int n, m;
+// int a[N];
+int a, b;
+void Sakuya()
+{
+    cin >> a >> b;
+
+    if((2 * a - b) % 3 == 0 && (2 * b - a) % 3 == 0 && (2 * b - a) >= 0 && (2 * a - b) >= 0){
+        cout << "YES\n";
+    }else {
+        cout << "NO\n";
+    }
+}
+
+signed main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int T;
+    for (cin >> T; T -- ; )
+        Sakuya();
+
+}
+
+#C:
+#include <bits/stdc++.h>
+
+using namespace std;
+typedef unsigned long long ULL;
+using LL = long long;
+
+mt19937_64 rd(time(0));
+constexpr int N = 3e5 + 5, mod = 998244353;
+constexpr double eps = 1e-8;
+//#pragma GCC optimize("Ofast,no-stack-protector,unroll-loops,fast-math")
+//#pragma GCC target("sse,sse2,sse3,ssse3,sse4.1,sse4.2,avx,avx2,popcnt,tune=native")
+
+#define fi first
+#define se second
+#define int long long
+#define lowbit(x) (x & (-x))
+#define PII pair<int, int>
+#define mid ((l + r) >> 1)
+
+int min(int a, int b) { return a < b ? a : b; }
+int max(int a, int b) { return a > b ? a : b; }
+
+int ksm(int a, int b){
+    a %= mod;
+    int res = 1;
+    while(b){
+        if(b & 1)res = res * a % mod;
+        a = a * a % mod;
+        b >>= 1;
+    }
+    return res;
+}
+
+int n, m;
+// int a[N];
+int a, b, c;
+void Sakuya()
+{
+    cin >> a >> b >> c;
+
+    if(a > b)swap(a, b);
+
+    if(b % a == 0){
+        int HAS = (b - 1) / a;
+
+        if(HAS >= c){
+            cout << "REBEL\n";
+            return;
+        }else {
+            cout << "OBEY\n";
+            return;
+        }
+    }
+
+    int need = b / a + 1;
+    int nowa = a * need;
+    int pyz = nowa - b;
+    // int has = (2 * b - nowa - 1) / a + 1;
+
+    // cout << has << "\n";
+
+    int need2 = 2 * b / a + 1;
+    int nowa2 = a * need2;
+    int pyz2 = nowa2 - b * 2;
+    // int has2 = (3 * b - nowa - 1) / a + 1;
+
+    int has = 0;
+
+    // cout << abs(pyz2 - pyz) << "\n";
+
+    if((b - a) % abs(pyz2 - pyz) == 0 && pyz % abs(pyz2 - pyz) == 0){
+        has = (b - 1 - abs(pyz2 - pyz)) / a + 1;
+        // cout << "cnm\n";
+    }else {
+        has = (b - 1 - 1) / a + 1;
+    }
+
+    if(b % a == 0){
+        has = (b - 1) / a;
+    }
+
+    // cout << has << "\n";
+
+    if(has >= c){
+        cout << "REBEL\n";
+        return;
+    }else {
+        cout << "OBEY\n";
+        return;
+    }
+
+    // if((b - 1) / a >= c){
+    //     cout << "REBEL\n";
+    //     return;
+    // }else {
+    //     cout << "OBEY\n";
+    //     return;
+    // }
+}
+
+signed main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int T;
+    for (cin >> T; T -- ; )
+        Sakuya();
+
+}
+
+#D:
+#include <bits/stdc++.h>
+
+using namespace std;
+typedef unsigned long long ULL;
+using LL = long long;
+
+mt19937_64 rd(time(0));
+constexpr int N = 3e5 + 5, mod = 998244353;
+constexpr double eps = 1e-8;
+//#pragma GCC optimize("Ofast,no-stack-protector,unroll-loops,fast-math")
+//#pragma GCC target("sse,sse2,sse3,ssse3,sse4.1,sse4.2,avx,avx2,popcnt,tune=native")
+
+#define fi first
+#define se second
+#define int long long
+#define lowbit(x) (x & (-x))
+#define PII pair<int, int>
+#define mid ((l + r) >> 1)
+
+int min(int a, int b) { return a < b ? a : b; }
+int max(int a, int b) { return a > b ? a : b; }
+
+int ksm(int a, int b){
+    a %= mod;
+    int res = 1;
+    while(b){
+        if(b & 1)res = res * a % mod;
+        a = a * a % mod;
+        b >>= 1;
+    }
+    return res;
+}
+
+int n, m;
+int a[N];
+int k, t;
+
+struct Node{
+    int l, r, d;
+}c[N];
+int maxn[N];
+
+int pos[N];
+int posL[N];
+int l, r, POS;
+
+void Sakuya()
+{
+    cin >> m >> n >> k >> t;
+
+    for(int i = 1; i <= m; ++ i)cin >> a[i];
+
+    sort(a + 1, a + 1 + m, greater<int>());
+
+    maxn[1] = a[1];
+    for(int i = 2; i <= m; ++ i){
+        maxn[i] = min(maxn[i - 1], a[i]);
+    }
+
+    int maxnpos = -1;
+
+    for(int i = 1; i <= 2e5; ++ i){
+        posL[i] = n + 1;
+    }
+
+    for(int i = 1; i <= k; ++ i){
+        cin >> c[i].l >> c[i].r >> c[i].d;
+
+        pos[c[i].d] = max(pos[c[i].d], c[i].r);
+
+        posL[c[i].d] = min(posL[c[i].d], c[i].l);
+
+        maxnpos = max(maxnpos, c[i].r);
+    }
+    
+    pos[(int)2e5 + 1] = pos[maxnpos];
+    for(int i = 2e5; i >= 1; -- i){
+        pos[i] = max(pos[i], pos[i + 1]);
+    }
+    posL[0] = n + 1;
+    for(int i = 1; i <= 2e5 + 1; ++ i){
+        posL[i] = min(posL[i], pos[i]);
+        posL[i] = min(posL[i], posL[i - 1]);
+    }
+    // for(int i = 1; i <= 5; ++ i){
+    //     cout << posL[i] << " ";
+    // }
+    // cout << "\n";
+
+    l = 1, r = m, POS = 0;
+
+    auto check = [&](int x) -> bool{
+        int nowd = a[x];
+        auto nowpos = pos[nowd + 1];
+
+        // cout << x << " " << nowd << " " << nowpos << "\n";
+        // cout << nowpos * 2 + n + 1 << "\n";
+        int nowcost = nowpos * 2 + n + 1;
+        nowcost -= 2 * max(0LL, (posL[nowd + 1] - 1));
+
+        // cout << x << " " << nowcost << "\n";
+
+        return nowcost <= t;
+    };
+
+    while(l <= r){
+        if(check(mid)){
+            POS = mid;
+            l = mid + 1;
+        }else {
+            r = mid - 1;
+        }
+    }
+
+    cout << POS << "\n";
+}
+
+signed main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    // int T;
+    // for (cin >> T; T -- ; )
+        Sakuya();
+
+}
